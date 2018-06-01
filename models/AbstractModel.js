@@ -4,7 +4,7 @@ const logule = require('logule')
 
 module.exports = class AbstractModel {
   /**
-   * Abstract CouchBase model
+   * Abstract Database model
    * @param connector
    */
   constructor (connector) {
@@ -12,22 +12,20 @@ module.exports = class AbstractModel {
   }
 
   /**
-   * Fetch a document from CouchBase with ID of model
+   * Fetch a document from Database with ID of model
    * @param id
-   * @param suffix
    * @return {Promise.<Map>}
    */
-  findById (id, suffix = null) {
+  findById (id) {
     return this.connector.get(id)
   }
 
   /**
    * Get collection of documents
    * @param ids
-   * @param suffix
    * @return Collection of document
    */
-  async findByMultipleId (ids, suffix = null) {
+  async findByMultipleId (ids) {
     let results = {}
     await Promise.map(ids, async (id) => {
       results[id] = await this.connector.get(id)
@@ -37,7 +35,7 @@ module.exports = class AbstractModel {
   }
 
   /**
-   * Create or update a object in CouchBase
+   * Create or update a object in Database
    * @param id
    * @param data
    * @param options
@@ -45,26 +43,6 @@ module.exports = class AbstractModel {
    */
   save (id, data, options = {expiry: 0}) {
     return this.connector.save(id, data, options)
-  }
-
-  /**
-   * Build couchbase key by adding prefix and sufix
-   * @param id
-   * @param suffix
-   * @returns {*}
-   * @private
-   */
-  _buildCbKey (id, suffix = null) {
-    let key = id + ''
-    if (key.substring(0, this.idPrefix.length) !== this.idPrefix) {
-      key = this.idPrefix + key
-    }
-
-    if (suffix !== null) {
-      key += suffix
-    }
-
-    return key
   }
 
   /**

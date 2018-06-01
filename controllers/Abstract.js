@@ -7,7 +7,7 @@ module.exports = class AbstractController {
   }
 
   get (serviceId) {
-      console.log("get (serviceId)")
+      console.log("get (" + serviceId + ")")
     return this.container[serviceId]
   }
 }

@@ -5,9 +5,7 @@ module.exports = class HealthController extends AbstractController {
   constructor(container) {
     super(container)
 
-    this.targetingModel = this.get('targetingModel')
-    this.msContext = this.get('msContext')
-
+    this.anyModel = this.get('user')
     // Load routes
     this.router.get('/health', this.checkHealth.bind(this))
   }
@@ -18,6 +16,7 @@ module.exports = class HealthController extends AbstractController {
    * @param res
    */
   async checkHealth(req, res) {
+    // const status = await this.anyModel // some async call
     res.json({status:'UP'})
   }
 }

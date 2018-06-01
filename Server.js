@@ -23,7 +23,7 @@ module.exports = class Server {
    * Connect to databases
    */
   async loadDBs () {
-    // const dynamoConnector = new DynamoConnector('data-devc', false)
+    // const dynamoConnector = new DynamoConnector('dbName', false)
     // this.container.campaignModel = new CampaignModel(dynamoConnector)
     this.container.storeModel = new Map()
     Object.entries(require('./store-mock.json')).forEach(([k, v]) => {
